@@ -37,12 +37,12 @@ public class facialExpressionRecognition {
 
         try{
             InputStream is=context.getResources().openRawResource(R.raw.haarcascade_frontalface_alt);
-            File cascadeDir = context.getDir("cascade", Context.MODE_PRIVATE);
+            File cascadeDir = context.getDir("cascade",Context.MODE_PRIVATE);
             File mCascadeFile = new File(cascadeDir, "haarcascade_frontalface_alt");
             FileOutputStream os = new FileOutputStream(mCascadeFile);
             byte[] buffer = new byte[4096];
             int byteRead;
-            while((byteRead=is.read(buffer)) !=1){
+            while((byteRead=is.read(buffer)) !=-1){
                 os.write(buffer, 0,byteRead);
             }
 
