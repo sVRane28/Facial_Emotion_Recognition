@@ -25,38 +25,42 @@ public class facialExpressionRecognition {
     private GpuDelegate gpuDelegate = null;
     private CascadeClassifier cascadeClassifier;
 
-    facialExpressionRecognition(AssetManager assetManager, Context context, String modelPath, int inputSize) throws IOException {
+//    facialExpressionRecognition(AssetManager assetManager, Context context, String modelPath, int inputSize){
+    facialExpressionRecognition(AssetManager assetManager, Context context, String modelPath, int inputSize)throws IOException{
         INPUT_SIZE = inputSize;
         Interpreter.Options options = new Interpreter.Options();
         gpuDelegate = new GpuDelegate();
         options.addDelegate(gpuDelegate);
         options.setNumThreads(4);
         interpreter = new Interpreter(loadModelFile(assetManager,modelPath),options);
-        Log.d( tag:"facial_Expression",msg:"Model is loaded");
+        Log.d("facial_Expression", "Model is loaded");
 
         try{
             InputStream is=context.getResources().openRawResource(R.raw.haarcascade_frontalface_alt);
-            File cascadeDir = context.getDir(name: "cascade", Context.MODE_PRIVATE);
-            File mCascadeFile = new File(cascadeDir, child: "haarcascade_frontalface_alt");
+            File cascadeDir = context.getDir("cascade", Context.MODE_PRIVATE);
+            File mCascadeFile = new File(cascadeDir, "haarcascade_frontalface_alt");
             FileOutputStream os = new FileOutputStream(mCascadeFile);
             byte[] buffer = new byte[4096];
             int byteRead;
             while((byteRead=is.read(buffer)) !=1){
-                os.write(buffer, off: 0,byteRead);
+                os.write(buffer, 0,byteRead);
             }
 
             is.close();
             os.close();
             cascadeClassifier = new CascadeClassifier(mCascadeFile.getAbsolutePath());
-            Log.d(tag: "facial_expression", msg: "Classifier is loaded");
-
-
+            Log.d("facial_expression", "Classifier is loaded");
 
         }
         catch(IOException e){
-        e.printStackTrace();
+            e.printStackTrace();
         }
+
     }
+
+
+
+
 
     private MappedByteBuffer loadModelFile(AssetManager assetManager, String modelPath) throws IOException{
         AssetFileDescriptor assetFileDescriptor = assetManager.openFd(modelPath);
