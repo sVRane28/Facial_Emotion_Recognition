@@ -9443,18 +9443,15 @@ public class Imgproc {
      * The function cv::putText renders the specified text string in the image. Symbols that cannot be rendered
      * using the specified font are replaced by question marks. See #getTextSize for a text rendering code
      * example.
-     *
      * @param img Image.
      * @param text Text string to be drawn.
      * @param org Bottom-left corner of the text string in the image.
-     * @param fontFace Font type, see #HersheyFonts.
-     * @param fontScale Font scale factor that is multiplied by the font-specific base size.
-     * @param color Text color.
-     * it is at the top-left corner.
+     * @param x
+     * @param y
      */
-    public static void putText(Mat img, String text, Point org, int fontFace, double fontScale, Scalar color) {
-        putText_3(img.nativeObj, text, org.x, org.y, fontFace, fontScale, color.val[0], color.val[1], color.val[2], color.val[3]);
-    }
+//    public static void putText(Mat img, String text, Point org, int x, int y) {
+//        putText_3(img.nativeObj, text, org.x, org.y, fontFace , fontScale, color.val[0], color.val[1], color.val[2], color.val[3]);
+//    }
 
 
     //

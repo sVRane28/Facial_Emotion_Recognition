@@ -74,7 +74,7 @@ public class CameraActivity extends Activity implements CameraBridgeViewBase.CvC
         mOpenCvCameraView.setCvCameraViewListener(this);
         try{
             int inputSize = 48;
-            facialExpressionRecognition = new facialExpressionRecognition(getAssets(), CameraActivity.this, "model.tflite", inputSize);
+            facialExpressionRecognition = new facialExpressionRecognition(getAssets(), CameraActivity.this, "model300.tflite", inputSize);
         }
         catch(IOException e){
             e.printStackTrace();

@@ -10,6 +10,7 @@ import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -102,15 +103,47 @@ public class facialExpressionRecognition {
             ByteBuffer byteBuffer = convertBitmapToByteBuffer(scaledBitmap);
             float[][] emotion = new float[1][1];
             interpreter.run(byteBuffer,emotion);
-            Log.d("facial_expression", "Output:  "+ Array.get(Array.get(emotion,0),0));
 
+            float emotion_v=(float)Array.get(Array.get(emotion,0),0);
+            Log.d("facial_expression", "Output:  "+ emotion_v);
 
+            String emotion_s = get_emotion_text(emotion_v);
+            Imgproc.putText(mat_image, emotion_s+ " ("+emotion_v+")",
+                    new Point((int)faceArray[i].tl().x+10,(int)faceArray[i].tl().y+20),
+                    1,1.5, new Scalar(0,0,255,150),2);
         }
 
         Core.flip(mat_image.t(), mat_image, 0);
         return mat_image;
 
     }
+
+    private String get_emotion_text(float emotion_v) {
+        String val = "";
+        if(emotion_v>= 0 & emotion_v< 0.5){
+            val = "Surprise";
+        }
+        else if(emotion_v>= 0.5 & emotion_v< 1.5){
+            val = "Fear";
+        }
+        else if(emotion_v>= 1.5 & emotion_v< 2.5){
+            val = "Angry";
+        }
+        else if(emotion_v>= 2.5 & emotion_v< 3.5){
+            val = "Neutral";
+        }
+        else if(emotion_v>= 3.5 & emotion_v< 4.5){
+            val = "Sad";
+        }
+        else if(emotion_v>= 4.5 & emotion_v< 5.5){
+            val = "Disgust";
+        }
+        else {
+            val = "Happy";
+        }
+        return val;
+    }
+
     private ByteBuffer convertBitmapToByteBuffer(Bitmap scaledBitmap){
         ByteBuffer byteBuffer;
         int size_image = INPUT_SIZE;
